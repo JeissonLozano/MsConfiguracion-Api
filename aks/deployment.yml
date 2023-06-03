@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-configuracion-api
+  labels:
+    app: ms-configuracion-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-configuracion-api
+  template:
+    metadata:
+      labels:
+        app: ms-configuracion-api
+    spec:
+      containers:
+      - name: ms-configuracion-api
+        image: $(ACR-NOMBRE).azurecr.io/ms-configuracion-api:latest
+        ports:
+        - containerPort: 80

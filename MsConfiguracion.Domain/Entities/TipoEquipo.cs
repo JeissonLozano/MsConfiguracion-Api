@@ -7,6 +7,6 @@ namespace MsConfiguracion.Domain.Entities
         public string NombreTipoEquipo { get; set; }
         public string Descripcion { get; set; }
 
-        public virtual Equipo Equipo { get; set; }
+        public virtual IEnumerable<Equipo> Equipos { get; set; }
     }
 }

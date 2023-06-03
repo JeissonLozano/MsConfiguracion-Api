@@ -26,14 +26,14 @@ namespace MsConfiguracion.Infrastructure.Context
             }
 
             modelBuilder.HasDefaultSchema(_config["SchemaName"]);
-            modelBuilder.Entity<TipoEquipo>()
-                .HasOne(Equipos => Equipos.Equipo)
-                .WithOne(TipoEquipo => TipoEquipo.TipoEquipo)
-                .HasForeignKey<Equipo>(TipoEquipo => TipoEquipo.IdTipoEquipo);
 
             modelBuilder.Entity<Zona>();
 
-            modelBuilder.Entity<Equipo>();
+            modelBuilder.Entity<Equipo>()
+                .HasOne(x => x.TipoEquipo)
+                .WithMany(x => x.Equipos)
+                .HasForeignKey(x => x.IdTipoEquipo)
+                .IsRequired(false);
 
             base.OnModelCreating(modelBuilder);
         }

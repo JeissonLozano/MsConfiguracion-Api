@@ -6,8 +6,22 @@ using MsConfiguracion.Infrastructure.Extensions;
 using Serilog;
 using System.Reflection;
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy
+                          .AllowAnyMethod()
+                          .AllowAnyHeader()
+                          .AllowAnyOrigin();
+                      });
+});
 
 // Add services to the container.
 
@@ -33,7 +47,7 @@ builder.Services.AddPersistence().AddDomainServices();
 
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1", new OpenApiInfo{ Title = "SISGOP-PC Ms-Configuracion Api", Version = "v1" });
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "SISGOP-PC Ms-Configuracion Api", Version = "v1" });
     // using System.Reflection;
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
@@ -49,6 +63,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthorization();
 

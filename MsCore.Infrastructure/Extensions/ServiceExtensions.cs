@@ -8,9 +8,7 @@ namespace MsCore.Infrastructure.Extensions
     {
         public static IServiceCollection AddDomainServices(this IServiceCollection svc)
         {
-            svc.AddTransient(typeof(IEquiposService), typeof(EquiposService));
-            svc.AddTransient(typeof(ITipoEquipoService), typeof(TipoEquiposService));
-            svc.AddTransient(typeof(IZonaService), typeof(ZonaService));
+            svc.AddTransient(typeof(IProductService), typeof(ProductService));
             return svc;
         }
     }
